@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive form</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body{
+            background-color: rgb(42, 102, 175);
+            padding: 20px;
+        }
+        .container{
+            max-width: 900px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .text{
+            margin-bottom: 10px;
+            text-align: center;
+        }
+      
+        .main{
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            justify-content: space-between;
+        }
+        .form{
+            background-color: #ecf0f3;;
+            padding: 30px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 400px;
+           
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+           
+        }
+        textarea{
+           
+            height: 100px;
+            resize: none;
+        }
+       
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+         img {
+            width: 400px;
+            border-radius: 10px;
+        }
+        .btn{
+            text-align: right;
+        }
+        button{
+            padding: 10px 20px;
+            border: none;
+            background: #2a66af;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1b4c8b;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        @media(max-width : 820px){
+            .main{
+                align-items: center;
+                flex-direction: column;
+            }
+            .aside {
+                text-align: center;
+            }
+            img,.form{
+                width: 100%;
+            }
+        }       
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="aside">
+            <h1 class="text">Get In Touch</h1>
+            <p class="text">Please fill the form to sumbmit your request.</p>
+        </div>
+            <div class="main">
+            <div class="form">
+                <form id="contactForm">
+                    <label>First Name</label>
+                    <input type="text" id="firstName">
+                    <p class="error" id="firstNameError"></p>
+
+                    <label>Last Name</label>
+                    <input type="text" id="lastName">
+                    <p class="error" id="lastNameError"></p>
+
+                    <label>Email</label>
+                    <input type="text" id="email">
+                    <p class="error" id="emailError"></p>
+
+                    <label>Phone</label>
+                    <input type="text" id="phone" maxlength="10">
+                    <p class="error" id="phoneError"></p>
+
+                    <label>Message</label>
+                    <textarea id="message"></textarea>
+                    <p class="error" id="messageError"></p>
+
+
+                    <div class="btn">
+                        <button type="button" onclick="validateForm()">Send</button>
+                    </div>
+                </form>
+            </div>
+                
+    
+            <div class="right">
+                <img src="im1.png" alt="Contact Image">
+            </div>
+        </div>
+        
+    </div>
+
+    <script>
+        
+         
+            function validateForm(){
+                let isValid= true
+
+            let firstName = document.getElementById("firstName").value.trim();
+            let lastName = document.getElementById("lastName").value.trim();
+            let email = document.getElementById("email").value.trim();
+            let phone = document.getElementById("phone").value.trim();
+            let message = document.getElementById("message").value.trim();
+            let emailPattern =/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            let phonePattern = /^[0-9]{10}$/;
+            let recheck = true
+
+            let firstNameError = document.getElementById("firstNameError");
+            let lastNameError = document.getElementById("lastNameError");
+            let emailError = document.getElementById("emailError");
+            let phoneError = document.getElementById("phoneError");
+            let messageError = document.getElementById("messageError");
+            
+
+            firstNameError.innerText = "";
+            lastNameError.innerText = "";
+            emailError.innerText = "";
+            phoneError.innerText = "";
+            messageError.innerText = "";
+
+            if (!firstName && !lastName && !email && !phone && !message) {
+                firstNameError.innerText = "Please enter valid information";
+                lastNameError.innerText = "Please enter valid information";
+                emailError.innerText = "Please enter valid information";
+                phoneError.innerText = "Please enter valid information";
+                messageError.innerText = "Please enter valid information";
+                return true;
+            }
+
+            switch (true){
+                case firstName ==="" : firstNameError.innerText="First Name is required";
+                isValid = false;
+                break;
+                case lastName ==="" : lastNameError.innerText="Last Name is required";
+                isValid = false;
+                break;
+                case email ==="" : emailError.innerText="Email is required";
+                isValid = false;
+                break;
+                case !emailPattern.test(email) : emailError.innerText="Invalid Email"; 
+                isValid=false;
+                break;
+                case phone ==="" : phoneError.innerText="Phone is required";
+                isValid = false;
+                break;
+                case !phonePattern.test(phone) : phoneError.innerText="Invalid Phone";
+                isValid=false;
+                break;
+                case (message ===""): messageError.innerText="Message cannot be empty";
+                isValid = false;
+                break;
+                case (message.length<10): messageError.innerText="Message must be at least 10 character's";
+                isValid = false;
+                break;
+      
+            }
+            if (isValid) {
+                if (confirm("Are you sure about your information?")) {
+                    alert("Form submitted successfully!");
+                    document.getElementById("contactForm").reset();
+                    setTimeout(() => location.reload(), 500);
+                }
+            }
+
+            }
+    </script>
+</body>
+</html>
+

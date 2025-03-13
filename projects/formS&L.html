@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login & signup</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body{
+            background: linear-gradient(135deg, #2a66af, #1b4c8b);
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container{
+            width: 400px;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        form{
+            display: flex;
+            flex-direction: column;
+            transition: all 0.5s ease-in-out;
+        }
+        input{
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            transition: all 0.3s ease-in-out;
+        }
+        input:focus {
+            border-color: #2a66af;
+            box-shadow: 0 0 8px rgba(42, 102, 175, 0.5);
+        }
+        button{
+            padding: 12px;
+            border: none;
+            background: #2a66af;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease-in-out;
+        }
+        button:hover{
+            background: #1b4c8b;
+            transform: scale(1.05);
+        }
+        .switchPage{
+            margin-top: 15px;
+            color: #555;
+            cursor: pointer;
+        }
+        .switchPage:hover{
+            text-decoration: underline;
+            color: #2a66af;
+        }
+        .hidden{
+            display: none;
+        }
+        .error{
+            color: red;
+            font-size: 14px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 820px) {
+            .container {
+                align-items: center;
+                flex-direction: column;
+                /* width: 60%; */
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 id="formTitle">Login</h2>
+
+        <form id="loginForm">
+            <input type="email" placeholder="Enter your email" id="loginEmail">
+            <p class="error" id="loginEmailError"></p>
+
+            <input type="password" placeholder="Password" id="loginPwd">
+            <p class="error" id="loginPwdError"></p>
+
+            <button type="button" onclick="login()">Login</button>
+        </form>
+
+        <!-- Signup Form -->
+
+        <form id="signupForm" class="hidden">
+            <input type="text" placeholder="Enter your name" id="signupName">
+            <p class="error" id="nameError"></p>
+
+            <input type="email" placeholder="Enter your email" id="signupEmail">
+            <p class="error" id="signupEmailError"></p>
+
+            <input type="password" placeholder="Password" id="signupPwd">
+            <p class="error" id="signupPwdError"></p>
+
+            <input type="password" placeholder="Confirm password" id="signupRePass">
+            <p class="error" id="signupRePwdError"></p>
+
+            <button type="button" onclick="signup()">Signup</button>
+        </form>
+
+        <p class="switchPage" onclick="switchPage()">Don't have an account? Sign up</p>
+        
+
+    </div>
+
+    <script>
+
+        function switchPage(){
+            let loginForm = document.getElementById("loginForm");
+            let signupForm = document.getElementById("signupForm");
+            let formTitle = document.getElementById("formTitle");
+            let switchText = document.querySelector(".switchPage");
+
+            let isLoginVisible = !loginForm.classList.contains("hidden");
+
+            switch(isLoginVisible){
+                case true : loginForm.classList.add("hidden");
+                            signupForm.classList.remove("hidden");
+                            // formTitle.innerText="login";
+                            // switchText.innerText="Don't have an account? Sign up";
+                            formTitle.innerText="Sign Up";
+                            switchText.innerText="Already have an account? Login";
+                          
+                            break;
+                case false : signupForm.classList.add("hidden");
+                            loginForm.classList.remove("hidden");
+                            // formTitle.innerText="Sign Up";
+                            // switchText.innerText="Already have an account? Login";
+                            formTitle.innerText="login";
+                            switchText.innerText="Don't have an account? Sign up";
+                          break;
+
+            }
+            
+        }
+
+        // function switchPage() {
+        //     let loginForm = document.getElementById("loginForm");
+        //     let signupForm = document.getElementById("signupForm");
+        //     let formTitle = document.getElementById("formTitle");
+        //     let switchText = document.querySelector(".switchPage");
+
+        //     let isLoginVisible = !loginForm.classList.contains("hidden");
+
+        //     isLoginVisible ?  loginForm.classList.add("hidden") && signupForm.classList.remove("hidden"):
+        //                       signupForm.classList.add("hidden")&& 
+        // 
+        // loginForm.classList.remove("hidden");
+        //   // loginForm.classList.toggle("hidden");
+        //   // signupForm.classList.toggle("hidden");
+        //     formTitle.innerText = isLoginVisible ? "Sign Up" : "Login";
+        //     switchText.innerText = isLoginVisible ? "Already have an account? Login" : "Don't have an account? Sign up";
+        // }
+
+
+        function login(){
+
+            let isValid=true;
+            
+            let email = document.getElementById("loginEmail").value.trim();
+            let pwd = document.getElementById("loginPwd").value.trim();
+            let emailErr = document.getElementById("loginEmailError");
+            let pwdErr = document.getElementById("loginPwdError");
+            let emailPattern =/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+            emailErr.innerText="";
+            pwdErr.innerText="";
+           
+            if(!email && !pwd){
+                emailErr.innerText="Please enter a valid text";
+                pwdErr.innerText="Please enter a valid text";
+                return false;
+            }
+
+           switch (true){
+            
+            case email ==="" : emailErr.innerText="Email is required";
+            isValid=false;
+            break;
+            case !emailPattern.test(email) : emailErr.innerText="Invalid Email"; 
+            isValid=false;
+            break;
+            case pwd ==="" : pwdErr.innerText="Password is required";
+            isValid=false;
+            break;
+            
+
+           }
+           if (isValid) {
+                 
+                    alert("Form submitted successfully!");
+                    document.getElementById("loginForm").reset();
+                    setTimeout(() => location.reload(), 500);
+                
+            }
+        }
+
+        function signup(){
+
+            let isValid=true;
+
+            let name = document.getElementById("signupName").value.trim();
+            let email = document.getElementById("signupEmail").value.trim();
+            let pwd = document.getElementById("signupPwd").value.trim();
+            let rePwd = document.getElementById("signupRePass").value.trim();
+            let emailPattern =/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+
+            let nameErr = document.getElementById("nameError");
+            let emailErr = document.getElementById("signupEmailError");
+            let pwdErr = document.getElementById("signupPwdError");
+            let rePwdErr = document.getElementById("signupRePwdError");
+
+
+            nameErr.innerText = "";
+            emailErr.innerText = "";
+            pwdErr.innerText = "";
+            rePwdErr.innerText = "";
+
+            if(!name && !email && !pwd && !rePwd){
+                nameErr.innerText="Please enter a valid text";
+                emailErr.innerText="Please enter a valid text";
+                pwdErr.innerText="Please enter a valid text";
+                rePwdErr.innerText="Please enter a valid text";
+                return false;
+            }
+
+            switch (true){
+                case name ==="" : nameErr.innerText="Full Name is required";
+                 isValid=false;
+                break;
+                case email ==="" : emailErr.innerText="Email is required";
+                isValid=false;
+                break;
+                case !emailPattern.test(email) : emailErr.innerText="Invalid Email"; 
+                isValid=false;
+                break;
+                case pwd ==="" : pwdErr.innerText="Password is required";
+                isValid=false;
+                break;
+                case rePwd ==="" : rePwdErr.innerText="Re-enter your password";
+                isValid=false;
+                break;
+                case pwd !== rePwd : rePwdErr.innerText="Password doesn't  match";
+                isValid=false;
+                break;
+            }
+
+            if (isValid) {
+                if (confirm("Are you sure about your information?")) {
+                    alert("Form submitted successfully!");
+                    document.getElementById("loginForm").reset();
+                    setTimeout(() => location.reload(), 500);
+                }
+            }
+        }
+
+        
+    </script>
+</body>
+</html>

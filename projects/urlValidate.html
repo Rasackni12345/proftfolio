@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL validator</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body{
+            background-color: yellowgreen;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            height: 100vh;
+        }
+        .container{
+            max-width: 400px;
+            width: 100%;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in-out;
+            
+        }
+        h2{
+            color: rgb(41, 122, 122);
+            margin: 10px 0;
+        }
+        input{
+            width: 100%;
+            padding: 15px;
+            margin: 20px 0;
+            /* border: none; */
+            border: 1px solid rgb(39, 73, 103);
+        }
+        input:focus{
+            box-shadow: 0px 0px 14px rgba(39, 73, 103,0.8);
+        }
+
+        .btn{
+            text-align: center;
+            border-color: rgb(39, 73, 103);
+        }
+        button{
+            padding: 10px;
+            width: 100%;
+            max-width: fit-content;
+            cursor: pointer;
+            border-radius: 5px;
+            border: none;
+            background-color:rgb(41, 122, 122);
+            color: white;
+            transition: all 0.3s ease-in-out;
+        }
+        button:hover{
+            background-color: rgb(41, 122, 122);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0px 0px 14px rgba(39, 73, 103,0.8);
+        }
+        p{
+            color: red;
+            font-size: 14px;
+            text-align: left;
+            margin-bottom:10px ;
+        }
+        @keyframes fadeIn{
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 820px){
+            .container{
+                text-align: center;
+                flex-direction: column;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>URL VALIDATOR</h2>
+        <input type="text" placeholder="Enter Url" id="url">
+        <p id="checkUrl"></p>
+        <div class="btn">
+            <button onclick="getUrl()">Check Url</button>
+        </div>
+       
+    </div>
+
+    <script>
+        function getUrl(){
+            let validateURL = /^(https?:\/\/)?([\w-]+\.)+[\w-]{2,}(\/.*)?$/;
+
+            let url = document.getElementById("url").value.trim();
+            let outPut = document.getElementById("checkUrl");
+
+            outPut.innerText="";
+
+            switch(true){
+                case url==="": outPut.innerText="Please enter URL";
+                validateURL=false;
+                break;
+                case !validateURL.test(url): outPut.innerText="❌ Wrong URL : " + url;
+                validateURL=false;
+                alert("URL not matched!");
+                break;
+                default:
+                    outPut.innerText = "✅ URL Matched : " + url;
+                    outPut.style.color = "green";
+                    alert("URL successfully matched");
+                    break;
+                        
+            }
+
+        }
+    </script>
+</body>
+</html>

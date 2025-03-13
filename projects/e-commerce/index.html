@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>shoe shopping</title>
+    <link rel="stylesheet" href="stye.css">
+</head>
+<body>
+  <div class="shoe-container">
+
+    <div class="home-container">
+
+        <div class="output">
+            <div class="back" id="result"></div>
+        </div>
+
+        <div class="content">
+            
+            <div class="tag">
+                <h2>NIKE</h2>
+                <h3>₹12,000</h3>
+            </div>
+            
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi omnis asperiores, ullam quia ratione ducimus, incidunt error eos repudiandae natus inventore modi culpa sapiente a veritatis tenetur assumenda aliquid reprehenderit officiis, temporibus ipsa! Saepe quia, totam dolor quisquam ratione earum aliquam nobis provident culpa accusantium laudantium nemo veniam id reiciendis.</p>
+        </div>
+
+    </div>
+
+    <div class="select-container">
+        <div class="color">
+            <div class="box">
+                <img src="shoe1-removebg-preview.png" onclick="colorChange('shoe1-removebg-preview.png')">
+            </div>
+            <div class="box">
+                <img src="shoe2-removebg-preview.png" onclick="colorChange2('shoe2-removebg-preview.png')">
+            </div>
+            <div class="box">
+                <img src="shoe4-removebg-preview.png" onclick="colorChange3('shoe4-removebg-preview.png')" class="b1">
+            </div>
+        </div>
+        <div class="sl-size">
+            <h2>Select Size</h2>
+            <div class="size">
+                <div class="shoe-size"><a href="#" onclick="selectSize(this, 'UK 6')">UK 6</a></div>
+                <div class="shoe-size"><a href="#" onclick="selectSize(this, 'UK 7')">UK 7</a></div>
+                <div class="shoe-size"><a href="#" onclick="selectSize(this, 'UK 8')">UK 8</a></div>
+                <div class="shoe-size"><a href="#" onclick="selectSize(this, 'UK 9')">UK 9</a></div>
+                <div class="shoe-size"><a href="#" onclick="selectSize(this, 'UK 10')">UK 10</a></div>
+                <div class="shoe-size"><a href="#" onclick="selectSize(this, 'UK 11')">UK 11</a></div>
+                <div class="shoe-size"><a href="#" onclick="selectSize(this, 'UK 12')">UK 12</a></div>
+                <div class="shoe-size"><a href="#" onclick="selectSize(this, 'UK 13')">UK 13</a></div>
+            </div>
+            <div class="btn">
+                <button onclick="addToBag()">Add to Bag</button>
+            </div>
+        </div>
+ 
+    </div>
+</div>
+
+
+    <script>
+
+        let selectedColor = "";
+        let selectedSize = "";
+
+        function colorChange(imageSrc) {
+            document.getElementById("result").style.backgroundImage = `url('${imageSrc}')`;
+            // document.getElementById("result").style.transform= "rotateZ(-40deg)";
+            
+            selectedColor=imageSrc;
+        }
+        function colorChange2(imageSrc) {
+            document.getElementById("result").style.backgroundImage = `url('${imageSrc}')`;
+            document.getElementById("result").style.transform= "rotateZ(-20deg)";
+            
+            selectedColor=imageSrc;
+        }
+        function colorChange3(imageSrc) {
+            document.getElementById("result").style.backgroundImage = `url('${imageSrc}')`;
+            document.getElementById("result").style.transform= "rotateZ(-40deg)";
+            
+            selectedColor=imageSrc;
+        }
+
+        function selectSize(element,size) {
+            document.querySelectorAll('.shoe-size a').forEach(a => a.style.color = "#333");
+            element.style.color = "red"; 
+            selectedSize =size;
+        }
+
+        function addToBag() {
+            if (!selectedColor) {
+                alert("❌ Please select a shoe color!");
+                return;
+            }
+            if (!selectedSize) {
+                alert("❌ Please select a shoe size!");
+                return;
+            }
+
+            alert(`✅ Added to bag!\n\n👟 Shoe: NIKE\n🎨 Color: ${selectedColor.split('-')[0].toUpperCase()}\n📏 Size: ${selectedSize}`);
+        }
+
+        // function addToBag() {
+        //     alert("Item added to bag!");
+        // }
+    </script>
+    
+</body>
+</html>
